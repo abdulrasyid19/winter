@@ -62,7 +62,7 @@ Winter is built on top of the wildly-popular [Laravel](https://laravel.com) fram
 
 You can get in touch with the maintainer team using the following mediums:
 
-* [Follow us on X / Twitter](https://x.com/usewintercms) for announcements and updates.
+* [Follow us on Twitter](https://twitter.com/usewintercms) for announcements and updates.
 * [Join us on Discord](https://discord.gg/D5MFSPH6Ux) to chat with us.
 
 ## Contributing
