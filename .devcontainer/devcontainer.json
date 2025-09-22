@@ -51,7 +51,6 @@
             ]
         }
     },
-    "postCreateCommand": "sudo chown $(id -u):$(id -g) /config/caddy && sudo chown $(id -u):$(id -g) /data/caddy",
-    "postStartCommand": "frankenphp run -c /etc/frankenphp/Caddyfile -a caddyfile &",
+    "postAttachCommand": "nohup ${containerWorkspaceFolder}/.devcontainer/run-frankenphp.sh > /dev/null 2>&1",
     "remoteUser": "winter"
 }
