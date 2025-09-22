@@ -40,9 +40,14 @@ git restore config
 
 cp ${PWD}/.devcontainer/.vscode/launch.json ${PWD}/.vscode/launch.json
 
+echo "### Mirror site to public directory"
+php artisan winter:mirror public
+
 if [ "${CODESPACES}" = "true" ]; then
     echo "### Configure for Codespaces"
     php ${PWD}/.devcontainer/local-features/bootstrap-winter/codespaces.php
     git update-index --assume-unchanged config/app.php
     gh codespace ports visibility 8000:public -c $CODESPACE_NAME
+    export SERVER_NAME="http://:8000"
+    export APP_URL="https://${CODESPACE_NAME}-8000.app.github.dev"
 fi
