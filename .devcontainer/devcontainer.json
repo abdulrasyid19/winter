@@ -10,6 +10,7 @@
             "username": "winter",
             "upgradePackages": false
         },
+        "ghcr.io/devcontainers/features/github-cli:1": {},
         // Comment the following feature if you wish to bootstrap and configure Winter manually (ie. you wish to use this for your own project)
         "./local-features/bootstrap-winter": "latest"
     },
