@@ -17,6 +17,10 @@
     "workspaceMount": "source=${localWorkspaceFolder},target=/winter,type=bind",
     "workspaceFolder": "/winter",
     "containerEnv": {
+        "APP_DEBUG": "true",
+        "XDEBUG_MODE": "debug",
+        "ROUTES_CACHE": "false",
+        "ASSET_CACHE": "false",
         "DB_CONNECTION": "sqlite",
         "DB_DATABASE": "${containerWorkspaceFolder}/storage/database.sqlite"
     },
