@@ -1,0 +1,36 @@
+app:
+  name: wintercms
+  container:
+    image: php:8.2-apache
+    ports:
+      - 80
+    env:
+      - name: APP_ENV
+        value: production
+      - name: APP_DEBUG
+        value: false
+      - name: DB_CONNECTION
+        value: mysql
+      - name: DB_HOST
+        valueFrom: db.host
+      - name: DB_PORT
+        value: "3306"
+      - name: DB_DATABASE
+        valueFrom: db.name
+      - name: DB_USERNAME
+        valueFrom: db.user
+      - name: DB_PASSWORD
+        valueFrom: db.password
+  build:
+    commands:
+      - docker-php-ext-install pdo pdo_mysql
+      - a2enmod rewrite
+      - echo "ServerName localhost" >> /etc/apache2/apache2.conf
+  start:
+    command: apache2-foreground
+  resources:
+    cpu: 300m
+    memory: 512Mi
+  dependencies:
+    - name: db
+      type: mysql
