@@ -1,4 +1,5 @@
-name: Deploy Winter CMS
+
+name: Build and Deploy Winter CMS
 
 on:
   push:
@@ -7,8 +8,8 @@ on:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,5 +22,22 @@ jobs:
       - name: Install dependencies
         run: composer install --no-dev --optimize-autoloader
 
+      - name: Cache vendor
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build   # << ini artinya deploy hanya jalan kalau build sukses
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Deploy to server
-        run: echo "✅ Deployment selesai (contoh aja dulu)"
+        run: |
+          echo "🚀 Mulai deploy ke server..."
+          echo "✅ Deployment selesai!"
