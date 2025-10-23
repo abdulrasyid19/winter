@@ -1,5 +1,5 @@
 app:
-  name: wintercms
+  name: winter-cms
   container:
     image: php:8.2-apache
     ports:
