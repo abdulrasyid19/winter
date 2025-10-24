@@ -36,7 +36,7 @@ return [
     |
     */
 
-    'backendUri' => 'backend',
+    'backendUri' => 'http://localhost',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'backendTimezone' => 'UTC',
+    'backendTimezone' => 'Asia/Jakarta',
 
     /*
     |--------------------------------------------------------------------------
@@ -376,8 +376,8 @@ return [
     */
 
     'defaultMask' => [
-        'file' => null,
-        'folder' => null,
+        'file' => '777',
+        'folder' => '777',
     ],
 
     /*

@@ -225,7 +225,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'id',
 
     /*
     |--------------------------------------------------------------------------
@@ -264,7 +264,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY', 'OgJt2lKm8VQw7IpIcJjyuLbAMs774JnA'),
     'cipher' => 'AES-256-CBC',
 
     /*
