@@ -1,36 +1,36 @@
-app:
-  name: winter-cms
-  container:
-    image: php:8.2-apache
-    ports:
-      - 80
-    env:
-      - name: APP_ENV
-        value: production
-      - name: APP_DEBUG
-        value: false
-      - name: DB_CONNECTION
-        value: mysql
-      - name: DB_HOST
-        valueFrom: db.host
-      - name: DB_PORT
-        value: "3306"
-      - name: DB_DATABASE
-        valueFrom: db.name
-      - name: DB_USERNAME
-        valueFrom: db.user
-      - name: DB_PASSWORD
-        valueFrom: db.password
-  build:
-    commands:
-      - docker-php-ext-install pdo pdo_mysql
-      - a2enmod rewrite
-      - echo "ServerName localhost" >> /etc/apache2/apache2.conf
-  start:
-    command: apache2-foreground
-  resources:
-    cpu: 300m
-    memory: 512Mi
-  dependencies:
-    - name: db
-      type: mysql
+name: winter-cms
+version: 1.0.0
+description: Winter CMS Deployment
+container:
+  image: ghcr.io/dulsyid/winter-app:latest   # <--- ganti sesuai registry di workflow kamu
+  port: 80
+resources:
+  cpu: 500m
+  memory: 512Mi
+  replicas: 1
+env:
+  - name: APP_ENV
+    value: production
+  - name: APP_DEBUG
+    value: false
+  - name: DB_CONNECTION
+    value: mysql
+  - name: DB_HOST
+    valueFrom: MYSQL_HOST
+  - name: DB_DATABASE
+    valueFrom: MYSQL_DATABASE
+  - name: DB_USERNAME
+    valueFrom: MYSQL_USER
+  - name: DB_PASSWORD
+    valueFrom: MYSQL_PASSWORD
+
+dependencies:
+  - type: MYSQL
+    name: MYSQL
+
+domain: winter.deployaja.id
+envMap:
+  db_host: MYSQL_HOST
+  db_name: MYSQL_DATABASE
+  db_user: MYSQL_USER
+  db_password: MYSQL_PASSWORD
