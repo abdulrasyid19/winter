@@ -2,9 +2,9 @@ name: Docker Build and Publish and Deploy to DeployAja (Private Repo)
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "rasyid" ]
   pull_request:
-    branches: [ "develop" ]
+    branches: [ "rasyid" ]
 
 env:
   REGISTRY: ghcr.io/abdulrasyid19/winter
