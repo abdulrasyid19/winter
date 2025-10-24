@@ -1,34 +1,32 @@
 name: winter-cms
 version: 1.0.0
 description: Winter CMS Deployment
+
 container:
-  image: ghcr.io/dulsyid/winter-app:latest   # <--- ganti sesuai registry di workflow kamu
+  image: ghcr.io/dulsyid/winter-app:latest   # sesuaikan dengan registry kamu
   port: 80
+
 resources:
   cpu: 500m
   memory: 512Mi
   replicas: 1
+
 env:
-  - name: APP_ENV
-    value: production
-  - name: APP_DEBUG
-    value: false
-  - name: DB_CONNECTION
-    value: mysql
   - name: DB_HOST
-    valueFrom: MYSQL_HOST
+    value: ${MYSQL_HOST}
   - name: DB_DATABASE
-    valueFrom: MYSQL_DATABASE
+    value: ${MYSQL_DATABASE}
   - name: DB_USERNAME
-    valueFrom: MYSQL_USER
+    value: ${MYSQL_USER}
   - name: DB_PASSWORD
-    valueFrom: MYSQL_PASSWORD
+    value: ${MYSQL_PASSWORD}
 
 dependencies:
-  - type: MYSQL
-    name: MYSQL
+  - name: mysql
+    version: "8.0"
 
 domain: winter.deployaja.id
+
 envMap:
   db_host: MYSQL_HOST
   db_name: MYSQL_DATABASE
