@@ -3,7 +3,7 @@ version: 1.0.0
 description: Winter CMS Deployment
 
 container:
-  image: ghcr.io/dulsyid/winter-app:latest   # sesuaikan dengan registry kamu
+  image: ghcr.io/dulsyid/winter-app:latest
   port: 80
 
 resources:
@@ -22,8 +22,9 @@ env:
     value: ${MYSQL_PASSWORD}
 
 dependencies:
-  - name: mysql
-    version: "8.0"
+  - type: mysql         
+    name: mysql         
+    version: "8.0"       
 
 domain: winter.deployaja.id
 
