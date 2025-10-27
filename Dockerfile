@@ -3,13 +3,13 @@ FROM php:8.1-apache
 WORKDIR /var/www/html
 
 # Install system dependencies & PHP extensions
-RUN apt-get clean && apt-get update && apt-get install -y \
-    zip unzip git curl libzip-dev libpng-dev libjpeg-dev libfreetype6-dev libxml2-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) pdo_mysql mbstring exif pcntl bcmath gd tokenizer xml \
-    && a2enmod rewrite \
-    && rm -rf /var/lib/apt/lists/*
-    
+RUN apt-get clean && apt-get update -o Acquire::Retries=5 --fix-missing && apt-get install -y \
+    zip unzip git curl libzip-dev libpng-dev libjpeg62-turbo-dev libfreetype6-dev libxml2-dev \
+ && docker-php-ext-configure gd --with-freetype --with-jpeg \
+ && docker-php-ext-install -j$(nproc) pdo_mysql mbstring exif pcntl bcmath gd tokenizer xml \
+ && a2enmod rewrite \
+ && rm -rf /var/lib/apt/lists/*
+
 # Copy project files
 COPY . .
 
