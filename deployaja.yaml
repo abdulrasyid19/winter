@@ -1,5 +1,6 @@
 name: winter
 description: WinterCMS web app with Apache and MySQL
+
 container:
   image: php:8.1-apache
   port: 80
@@ -7,18 +8,23 @@ container:
     context: .
     dockerfile: Dockerfile
   workingDir: /var/www/html
+
 resources:
   cpu: 500m
   memory: 1Gi
   replicas: 1
+
 dependencies:
   - name: mysql
     type: mysql
     version: "8.0"
     storage: 1Gi
+
 env:
   - name: APP_ENV
     value: production
+  - name: APP_DEBUG
+    value: "false"
   - name: DB_CONNECTION
     value: mysql
   - name: DB_HOST
@@ -31,13 +37,24 @@ env:
     value: root
   - name: DB_PASSWORD
     value: yourpassword
+  - name: CACHE_DRIVER
+    value: file
+  - name: SESSION_DRIVER
+    value: file
+  - name: QUEUE_CONNECTION
+    value: sync
+
 healthCheck:
   path: /
   port: 80
   initialDelaySeconds: 60
   periodSeconds: 30
+
 domain: winter.deployaja.id
+
 volumes:
   - name: app-storage
     size: 1Gi
     mountPath: /var/www/html/storage
+
+# Rebuild trigger 2025-10-27
