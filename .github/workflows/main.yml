@@ -7,9 +7,9 @@ on:
     branches: ["gregon"]
 
 env:
-  REGISTRY: ghcr.io/abdulrasyid19/winter
+  REGISTRY: ghcr.io/abdulrasyid19
   GH_REGISTRY: ghcr.io
-  IMAGE_NAME: rasyid-winter-cms
+  IMAGE_NAME: nginx
   DOCKER_BUILDKIT: 1
 
 jobs:

@@ -1,36 +1,43 @@
-app:
-  name: wintercms
-  container:
-    image: php:8.2-apache
-    ports:
-      - 80
-    env:
-      - name: APP_ENV
-        value: production
-      - name: APP_DEBUG
-        value: false
-      - name: DB_CONNECTION
-        value: mysql
-      - name: DB_HOST
-        valueFrom: db.host
-      - name: DB_PORT
-        value: "3306"
-      - name: DB_DATABASE
-        valueFrom: db.name
-      - name: DB_USERNAME
-        valueFrom: db.user
-      - name: DB_PASSWORD
-        valueFrom: db.password
+name: winter
+description: WinterCMS web app with Apache and MySQL
+container:
+  image: php:8.1-apache
+  port: 80
   build:
-    commands:
-      - docker-php-ext-install pdo pdo_mysql
-      - a2enmod rewrite
-      - echo "ServerName localhost" >> /etc/apache2/apache2.conf
-  start:
-    command: apache2-foreground
-  resources:
-    cpu: 300m
-    memory: 512Mi
-  dependencies:
-    - name: db
-      type: mysql
+    context: .
+    dockerfile: Dockerfile
+  workingDir: /var/www/html
+resources:
+  cpu: 500m
+  memory: 1Gi
+  replicas: 1
+dependencies:
+  - name: mysql
+    type: mysql
+    version: "8.0"
+    storage: 1Gi
+env:
+  - name: APP_ENV
+    value: production
+  - name: DB_CONNECTION
+    value: mysql
+  - name: DB_HOST
+    value: mysql
+  - name: DB_PORT
+    value: "3306"
+  - name: DB_DATABASE
+    value: winter
+  - name: DB_USERNAME
+    value: root
+  - name: DB_PASSWORD
+    value: yourpassword
+healthCheck:
+  path: /
+  port: 80
+  initialDelaySeconds: 60
+  periodSeconds: 30
+domain: winter.deployaja.id
+volumes:
+  - name: app-storage
+    size: 1Gi
+    mountPath: /var/www/html/storage
