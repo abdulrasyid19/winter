@@ -4,9 +4,11 @@ WORKDIR /var/www/html
 
 # Install system dependencies & PHP extensions
 RUN apt-get update && apt-get install -y \
-    zip unzip git curl libzip-dev libpng-dev libonig-dev libxml2-dev \
+    zip unzip git curl libzip-dev libpng-dev libjpeg62-turbo-dev libfreetype6-dev libxml2-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd tokenizer xml \
-    && a2enmod rewrite
+    && a2enmod rewrite \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy project files
 COPY . .
