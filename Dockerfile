@@ -1,4 +1,4 @@
-# Rebuild trigger 2025-10-27
+# Rebuild trigger 2025-10-28
 FROM php:8.2-apache
 
 # Set ServerName agar tidak muncul warning
@@ -19,7 +19,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd xml intl fileinfo zip
 RUN a2enmod rewrite
 
-# Install Composer (pastikan sebelum digunakan)
+# Install Composer
 RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
   && chmod +x /usr/local/bin/composer
 
@@ -36,20 +36,22 @@ RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --optimize-autoloader --p
 COPY . .
 
 # Set permission folder penting
-RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache /var/www/html/index.php
 
 # Konfigurasi Apache untuk WinterCMS
 RUN echo "<Directory /var/www/html>\n\
+    Options Indexes FollowSymLinks\n\
     AllowOverride All\n\
     Require all granted\n\
-</Directory>" > /etc/apache2/conf-enabled/wintercms.conf \
- && echo 'DirectoryIndex index.php index.html' >> /etc/apache2/apache2.conf
+    DirectoryIndex index.php index.html\n\
+</Directory>" > /etc/apache2/conf-enabled/wintercms.conf
 
 # Expose port 80
 EXPOSE 80
 
-# Healthcheck
-HEALTHCHECK CMD curl -f http://localhost/ || exit 1
+# Healthcheck untuk Kubernetes probe
+HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 \
+    CMD curl -f http://localhost/ || exit 1
 
 # Jalankan Apache
 CMD ["apache2-foreground"]
